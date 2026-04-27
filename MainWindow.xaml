@@ -1,0 +1,79 @@
+﻿<Window x:Class="GearOS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:utils="clr-namespace:GearOS.Utilities"
+        Title="GearOS" Height="650" Width="1100" 
+        Background="#181B21" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <utils:SvgToImageConverter x:Key="UniversalConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#23262E" BorderBrush="#2D3039" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="GearOS" Foreground="#A349A4" FontWeight="Bold" FontSize="22" Margin="25,0,50,0"/>
+                <Button Content="ÉQUIPEMENT" Click="ShowEquipement" Foreground="White" Background="Transparent" BorderThickness="0" Margin="15,0" FontWeight="SemiBold" Cursor="Hand"/>
+                <Button Content="BIBLIOTHÈQUE" Click="ShowLibrary" Foreground="#888B91" Background="Transparent" BorderThickness="0" Margin="15,0" FontWeight="SemiBold" Cursor="Hand"/>
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <ScrollViewer x:Name="EquipementView" Visibility="Visible" VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="40">
+                    <Grid Margin="0,0,0,30">
+                        <TextBlock Text="Périphériques détectés" Foreground="White" FontSize="28" FontWeight="Light"/>
+                        <Button HorizontalAlignment="Right" VerticalAlignment="Center" Padding="20,8" Background="#A349A4" Foreground="White" BorderThickness="0" Cursor="Hand" Click="ScanDevices_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="+" FontWeight="Bold" Margin="0,0,8,0"/>
+                                <TextBlock Text="SCANNER LE MATÉRIEL" FontSize="10" FontWeight="Black"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <ItemsControl x:Name="DevicesListControl">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#23262E" CornerRadius="12" Padding="20,15" Margin="0,0,0,12" 
+                                        BorderBrush="#2D3039" BorderThickness="1"
+                                        MouseLeftButtonUp="Device_Click" Cursor="Hand">
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Border Width="130" Height="90" Background="#1B1E24" CornerRadius="8" Padding="12">
+                                                <Image Source="{Binding DeviceImageUrl, Converter={StaticResource UniversalConverter}}" 
+                                                       Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            </Border>
+
+                                            <StackPanel VerticalAlignment="Center" Margin="25,0">
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                                    <Image Source="{Binding BrandIconUrl, Converter={StaticResource UniversalConverter}}" 
+                                                           Width="16" Height="16" Margin="0,0,10,0" VerticalAlignment="Center" Opacity="0.8"/>
+                                                    <TextBlock Text="{Binding Name}" Foreground="White" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Category}" Foreground="#A349A4" FontSize="11" FontWeight="Bold"/>
+                                                    <TextBlock Text=" | READY" Foreground="#44FF44" FontSize="10" FontWeight="Black" Margin="8,0,0,0" VerticalAlignment="Center" Opacity="0.7"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+
+            <ScrollViewer x:Name="LibraryView" Visibility="Collapsed" VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="40">
+                    <TextBlock Text="Ma Bibliothèque" Foreground="White" FontSize="28" FontWeight="Light" Margin="0,0,0,30"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>
