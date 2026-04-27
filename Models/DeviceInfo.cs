@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace GearOS.Models
 {
@@ -6,8 +6,9 @@ namespace GearOS.Models
     {
         public string Name { get; set; }
         public string DisplayName { get; set; }
-        public int Row { get; set; }
-        public int Col { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public string ID { get; set; }
         public KeyMapping Mapping { get; set; } = new KeyMapping();
     }
 
