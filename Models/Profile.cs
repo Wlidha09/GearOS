@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using GearOS.Models;
 
 namespace GearOS.Models
 {
