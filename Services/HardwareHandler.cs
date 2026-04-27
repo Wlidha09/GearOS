@@ -32,7 +32,7 @@ namespace GearOS.Services
                             Name = pName,
                             Vendor = dev.Manufacturer ?? "Générique",
                             VendorId = dev.VendorID,
-                            ProductId = dev.ProductID,
+                            ProductId = (int)dev.ProductID,
                             Category = n.Contains("MOUSE") ? "Souris" : n.Contains("KEYBOARD") ? "Clavier" : "Périphérique"
                         });
                     }
