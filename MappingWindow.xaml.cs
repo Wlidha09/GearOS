@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using GearOS.Models;
 using GearOS.Utilities;
@@ -49,6 +49,15 @@ namespace GearOS
             if (_selectedKey != null)
             {
                 _selectedKey.Mapping.TargetAction = MacroInput.Text;
+                ProfileManager.SaveProfile(_device.ActiveProfile);
+            }
+        }
+
+        private void ActionTypeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_selectedKey != null && ActionTypeCombo != null)
+            {
+                _selectedKey.Mapping.Type = (MappingType)ActionTypeCombo.SelectedIndex;
                 ProfileManager.SaveProfile(_device.ActiveProfile);
             }
         }
