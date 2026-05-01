@@ -14,10 +14,10 @@ namespace GearOS
         {
             InitializeComponent();
             _device = device;
-            InitializeProfile();
+            InitializeProfileAsync();
         }
 
-        private void InitializeProfile()
+        private async void InitializeProfileAsync()
         {
             var savedProfile = ProfileManager.LoadProfile();
             if (savedProfile != null)
@@ -25,7 +25,8 @@ namespace GearOS
             else
             {
                 _device.ActiveProfile = new DeviceProfile { Name = "Layer 4" };
-                DeviceDetector.DetectAndFillKeys(_device);
+                // Utiliser la détection async pour les specs complètes
+                await DeviceDetector.DetectAndFillKeysAsync(_device);
                 _device.ActiveProfile.Keys = _device.Keys;
             }
 
