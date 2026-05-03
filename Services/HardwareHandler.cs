@@ -6,7 +6,6 @@ using GearOS.Models;
 
 namespace GearOS.Services
 {
-
     public class HardwareHandler
     {
         public List<DeviceInfo> GetAllConnectedDevices()

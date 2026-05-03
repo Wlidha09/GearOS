@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using GearOS.Models;
 using GearOS.Utilities;
+using GearOS.Services;
 
 namespace GearOS
 {
@@ -9,11 +10,13 @@ namespace GearOS
     {
         private DeviceInfo _device;
         private DeviceKey _selectedKey;
+        private RGBController _rgbController;
 
         public MappingWindow(DeviceInfo device)
         {
             InitializeComponent();
             _device = device;
+            _rgbController = new RGBController(device);
             InitializeProfileAsync();
         }
 
@@ -25,7 +28,6 @@ namespace GearOS
             else
             {
                 _device.ActiveProfile = new DeviceProfile { Name = "Layer 4" };
-                // Utiliser la détection async pour les specs complètes
                 await DeviceDetector.DetectAndFillKeysAsync(_device);
                 _device.ActiveProfile.Keys = _device.Keys;
             }
@@ -50,7 +52,6 @@ namespace GearOS
             if (_selectedKey != null)
             {
                 _selectedKey.Mapping.TargetAction = MacroInput.Text;
-                ProfileManager.SaveProfile(_device.ActiveProfile);
             }
         }
 
@@ -59,8 +60,13 @@ namespace GearOS
             if (_selectedKey != null && ActionTypeCombo != null)
             {
                 _selectedKey.Mapping.Type = (MappingType)ActionTypeCombo.SelectedIndex;
-                ProfileManager.SaveProfile(_device.ActiveProfile);
             }
+        }
+
+        private void SaveMapping_Click(object sender, RoutedEventArgs e)
+        {
+            ProfileManager.SaveProfile(_device.ActiveProfile);
+            MessageBox.Show($"Mapping sauvegardé pour {_device.ActiveProfile.Name}", "Succès");
         }
 
         private void Save_Click(object sender, RoutedEventArgs e) => this.Close();
